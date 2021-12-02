@@ -1,0 +1,24 @@
+{
+	"name": "rmcgirr83/requirereason",
+	"type": "phpbb-extension",
+	"description": "Force users to input a reason when editing or deleting a post",
+	"homepage": "https://github.com/rmcgirr83/requirereason",
+	"version": "1.0.0",
+	"time": "2021-12-01",
+	"license": "GPL-2.0-only",
+	"authors": [
+		{
+			"name": "Rich McGirr",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=7.1"
+	},
+	"extra": {
+		"display-name": "Require Reason",
+		"soft-require": {
+            "phpbb/phpbb": ">=3.3, <4.0"
+        }
+	}
+}
