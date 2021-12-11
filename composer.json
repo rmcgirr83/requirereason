@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Force users to input a reason when editing or deleting a post",
 	"homepage": "https://github.com/rmcgirr83/requirereason",
-	"version": "1.0.0",
-	"time": "2021-12-01",
+	"version": "1.0.1",
+	"time": "2021-12-11",
 	"license": "GPL-2.0-only",
 	"authors": [
 		{
