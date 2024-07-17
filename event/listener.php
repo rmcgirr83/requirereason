@@ -21,22 +21,22 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 */
 class listener implements EventSubscriberInterface
 {
-	/** @var language $language */
+	/** @var language */
 	protected $language;
 
-	/* @var request $request */
+	/* @var request */
 	protected $request;
 
-	/** @var template $template */
+	/** @var template */
 	protected $template;
 
-	/** @var user $user */
+	/** @var user */
 	protected $user;
 
-	/** @var string root_path */
+	/** @var root_path */
 	protected $root_path;
 
-	/** @var string php_ext */
+	/** @var php_ext */
 	protected $php_ext;
 
 	/**
