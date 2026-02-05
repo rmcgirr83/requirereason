@@ -24,7 +24,7 @@ class listener implements EventSubscriberInterface
 {
 	/** @var auth $auth */
 	protected object $auth;
-	
+
 	/** @var language */
 	protected object $language;
 
