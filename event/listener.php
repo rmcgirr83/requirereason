@@ -9,6 +9,7 @@
 
 namespace rmcgirr83\requirereason\event;
 
+use phpbb\auth\auth;
 use phpbb\language\language;
 use phpbb\request\request;
 use phpbb\template\template;
@@ -21,29 +22,33 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 */
 class listener implements EventSubscriberInterface
 {
+	/** @var auth $auth */
+	protected object $auth;
+	
 	/** @var language */
-	protected $language;
+	protected object $language;
 
 	/* @var request */
-	protected $request;
+	protected object $request;
 
 	/** @var template */
-	protected $template;
+	protected object $template;
 
 	/** @var user */
-	protected $user;
+	protected object $user;
 
 	/** @var root_path */
-	protected $root_path;
+	protected string $root_path;
 
 	/** @var php_ext */
-	protected $php_ext;
+	protected string $php_ext;
 
 	/**
 	* Constructor
 	* NOTE: The parameters of this method must match in order and type with
 	* the dependencies defined in the services.yml file for this service.
 	*
+	* @param auth		$auth			auth object
 	* @param language	$language		language object
 	* @param request	$request		request object
 	* @param template	$template		template object
@@ -52,6 +57,7 @@ class listener implements EventSubscriberInterface
 	* @param string		$php_ext		phpEx
 	*/
 	public function __construct(
+		auth $auth,
 		language $language,
 		request $request,
 		template $template,
@@ -59,6 +65,7 @@ class listener implements EventSubscriberInterface
 		string $root_path,
 		string $php_ext)
 	{
+		$this->auth = $auth;
 		$this->language = $language;
 		$this->request = $request;
 		$this->template = $template;
@@ -165,9 +172,10 @@ class listener implements EventSubscriberInterface
 		$error = $event['error'];
 		$mode = $event['mode'];
 		$edit_reason = $event['post_data']['post_edit_reason'];
+		$forum_id = $event['forum_id'];
 		$delete_checked = $this->request->is_set_post('delete') ? true : false;
 
-		if ($mode == 'edit' && empty($edit_reason) && !$delete_checked)
+		if ($mode == 'edit' && empty($edit_reason) && !$delete_checked && $this->auth->acl_get('m_edit', $forum_id))
 		{
 			$error[] = $this->language->lang('REASON_REQUIRED_EDIT');
 		}
@@ -188,7 +196,7 @@ class listener implements EventSubscriberInterface
 		$error = $event['error'];
 		$page_data = $event['page_data'];
 		$edit_reason = !empty($page_data['EDIT_REASON']) ? true : false;
-		$edit_reason_auth = $page_data['S_EDIT_REASON'];
+		$edit_reason_auth = $this->auth->acl_get('m_edit', $event['forum_id']);
 
 		if ($event['mode'] == 'edit' && $edit_reason_auth && !count($error))
 		{
