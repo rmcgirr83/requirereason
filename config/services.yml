@@ -2,6 +2,7 @@ services:
     rmcgirr83.requirereason.listener:
         class: rmcgirr83\requirereason\event\listener
         arguments:
+            - '@auth'
             - '@language'
             - '@request'
             - '@template'
